@@ -28,7 +28,9 @@ def menu():
         elif choix == 4:
             print("): tu pensais que j'allais faire ca ici par magie??? Prends une feuille et dessine")
         elif choix == 5:
-            print("): ca va venir")
+            print('Processing...')
+            appliquer_filtre_nagao('me.jpeg')
+            print('Done')
         elif choix == 0:
             print("Au revoir!")
             break
@@ -210,6 +212,44 @@ def histogramme_image_couleur():
     # Afficher tous les sous-graphiques
     plt.tight_layout()
     plt.show()
+# Fonction pour appliquer le filtre de Nagao
+def appliquer_filtre_nagao(image_path):    
+    # Charger l'image couleur avec Pillow
+    image = Image.open(image_path)
+    
+    # Convertir l'image couleur en niveaux de gris avec Pillow
+    image_gray = image.convert('L')
+    print('Voici l''image qu''on va utiliser')
+    image_gray.show()
+    # Convertir l'image PIL en un tableau NumPy
+    image_array = np.array(image_gray)
+    
+    # On récupère les dimensions de l'image
+    hauteur, largeur = image_array.shape
+    
+    # Créer une nouvelle image pour stocker l'image filtrée
+    image_filtrée = np.zeros((hauteur, largeur), dtype=np.uint8)
+    
+    # Appliquer le filtre de Nagao sur chaque pixel de l'image
+    for i in range(1, hauteur - 1):  # Ne pas traiter les bords
+        for j in range(1, largeur - 1):
+            # Extraire la fenêtre 3x3 autour du pixel (i, j)
+            fenêtre = image_array[i-1:i+2, j-1:j+2]
+            
+            # Calculer la médiane des pixels de la fenêtre
+            médiane = np.median(fenêtre)
+            
+            # Remplacer le pixel par la médiane
+            image_filtrée[i, j] = médiane
+    
+    # Convertir l'image filtrée (NumPy array) en image PIL
+    image_filtrée_pil = Image.fromarray(image_filtrée)
+    print("Voici l'image resultante apres le filtre de Nagao")
+    # Afficher l'image filtrée
+    image_filtrée_pil.show()
 
-if __name__ == "__main__":
-    menu()
+    # Sauvegarder l'image filtrée
+    image_filtrée_pil.save('portrait_filtré_nagao.jpg')
+
+
+menu()
