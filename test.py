@@ -27,6 +27,17 @@ def menu():
             convert_image()
         elif choix == 4:
             print("): tu pensais que j'allais faire ca ici par magie??? Prends une feuille et dessine")
+            image = Image.open("me.jpeg")
+            image_array = np.array(image)
+
+            R = image_array[:, :, 0]  # Canal Rouge 0
+            G = image_array[:, :, 1]  # Canal Vert1
+            B = image_array[:, :, 2]  # Canal Bleu2
+
+            # Affichage des matrices dans la console
+            print("Matrice du canal Rouge :\n", R)
+            print("\nMatrice du canal Vert :\n", G)
+            print("\nMatrice du canal Bleu :\n", B)
         elif choix == 5:
             print('Processing...')
             appliquer_filtre_nagao('me.jpeg')
