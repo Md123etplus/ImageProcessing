@@ -2,6 +2,22 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 
+#c'est avec ca que je genere l'image de l'histo
+
+data = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255], [255, 255, 0], [0, 255, 255]],
+                [[255, 255, 255], [0, 0, 0], [255, 0, 255], [0, 255, 0], [0, 0, 0]],
+                [[255, 0, 0], [255, 255, 0], [0, 0, 255], [0, 0, 0], [255, 0, 255]],
+                [[0, 255, 255], [255, 0, 255], [255, 255, 255], [0, 0, 0], [0, 255, 0]],
+                [[0, 0, 255], [255, 0, 0], [255, 255, 0], [0, 255, 0], [255, 255, 255]]], dtype=np.uint8)
+
+# Créer une image à partir de la matrice
+image = Image.fromarray(data)
+large_image = image.resize((image.width * 100, image.height * 100), Image.NEAREST)
+large_image.show()
+large_image.save("bon_choix.png")
+
+# Sauvegarder l'image générée
+image.save("image_generée.png")
 # Fichiers pour les images binaires
 I2_BMP_FILE = 'I2_binaire.bmp'
 I1_BMP_FILE = 'I1_binaire.bmp'
@@ -26,18 +42,26 @@ def menu():
         elif choix == 3:
             convert_image()
         elif choix == 4:
-            print("): tu pensais que j'allais faire ca ici par magie??? Prends une feuille et dessine")
-            image = Image.open("me.jpeg")
-            image_array = np.array(image)
 
-            R = image_array[:, :, 0]  # Canal Rouge 0
-            G = image_array[:, :, 1]  # Canal Vert1
-            B = image_array[:, :, 2]  # Canal Bleu2
+            # Recharger l'image sauvegardée
+            image_rechargee = Image.open("image_generée.png")
+            image_array = np.array(image_rechargee)
+
+            # Séparer les canaux R, G et B
+            R = image_array[:, :, 0]  # Canal Rouge
+            G = image_array[:, :, 1]  # Canal Vert
+            B = image_array[:, :, 2]  # Canal Bleu
 
             # Affichage des matrices dans la console
-            print("Matrice du canal Rouge :\n", R)
-            print("\nMatrice du canal Vert :\n", G)
-            print("\nMatrice du canal Bleu :\n", B)
+            print("Matrice du canal Rouge (après rechargement) :")
+            print(R)
+
+            print("\nMatrice du canal Vert (après rechargement) :")
+            print(G)
+
+            print("\nMatrice du canal Bleu (après rechargement) :")
+            print(B)
+
         elif choix == 5:
             print('Processing...')
             appliquer_filtre_nagao('me.jpeg')
