@@ -4,20 +4,20 @@ import matplotlib.pyplot as plt
 
 #c'est avec ca que je genere l'image de l'histo
 
-data = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255], [255, 255, 0], [0, 255, 255]],
-                [[255, 255, 255], [0, 0, 0], [255, 0, 255], [0, 255, 0], [0, 0, 0]],
-                [[255, 0, 0], [255, 255, 0], [0, 0, 255], [0, 0, 0], [255, 0, 255]],
-                [[0, 255, 255], [255, 0, 255], [255, 255, 255], [0, 0, 0], [0, 255, 0]],
-                [[0, 0, 255], [255, 0, 0], [255, 255, 0], [0, 255, 0], [255, 255, 255]]], dtype=np.uint8)
+# data = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255], [255, 255, 0], [0, 255, 255]],
+#                 [[255, 255, 255], [0, 0, 0], [255, 0, 255], [0, 255, 0], [0, 0, 0]],
+#                 [[255, 0, 0], [255, 255, 0], [0, 0, 255], [0, 0, 0], [255, 0, 255]],
+#                 [[0, 255, 255], [255, 0, 255], [255, 255, 255], [0, 0, 0], [0, 255, 0]],
+#                 [[0, 0, 255], [255, 0, 0], [255, 255, 0], [0, 255, 0], [255, 255, 255]]], dtype=np.uint8)
 
-# Créer une image à partir de la matrice
-image = Image.fromarray(data)
-large_image = image.resize((image.width * 100, image.height * 100), Image.NEAREST)
-large_image.show()
-large_image.save("bon_choix.png")
+# # Créer une image à partir de la matrice
+# image = Image.fromarray(data)
+# large_image = image.resize((image.width * 100, image.height * 100), Image.NEAREST)
+# large_image.show()
+# large_image.save("bon_choix.png")
 
-# Sauvegarder l'image générée
-image.save("image_generée.png")
+# # Sauvegarder l'image générée
+# image.save("image_generée.png")
 # Fichiers pour les images binaires
 I2_BMP_FILE = 'I2_binaire.bmp'
 I1_BMP_FILE = 'I1_binaire.bmp'
@@ -44,8 +44,10 @@ def menu():
         elif choix == 4:
 
             # Recharger l'image sauvegardée
-            image_rechargee = Image.open("image_generée.png")
-            image_array = np.array(image_rechargee)
+
+            mon_portrait = Image.open("me.jpeg")
+            mon_portrait = mon_portrait.resize((5, 5))
+            image_array = np.array(mon_portrait)
 
             # Séparer les canaux R, G et B
             R = image_array[:, :, 0]  # Canal Rouge
